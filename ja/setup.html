@@ -92,6 +92,14 @@
     <li class="none">
               <a href="getting-started.html">使い方</a>
         </li>
+              
+    <li class="none">
+              <a href="rule-guide.html">処理ルールの設定</a>
+        </li>
+              
+    <li class="none">
+              <a href="transformer-guide.html">クロール結果変換方法</a>
+        </li>
           </ul>
           <h2>プロジェクト文書</h2>
         <ul>
@@ -134,10 +142,10 @@
 
 <div id="article">
 <div class="section"><h2>セットアップ</h2>
-<p>S2Robot は、簡易的に利用するためにクロールしたデータを メモリ上に保存する方法と、s2robot-db を利用して DB に 永続的に保存する方法があります。</p>
+<p>S2Robot は、簡易的に利用するためにクロールしたデータをメモリ上に保存する方法と、s2robot-db を利用して DB に永続的に保存する方法があります。</p>
 <div class="section"><h3>クロール結果データの保存にメモリを利用する場合</h3>
 <p>この方法は手軽に S2Robot を利用したい場合におすすめです。 クロール結果のデータをメモリを利用しているので、簡単に S2Robot を利用することができます。</p>
-<p>Maven 2 を利用している場合は、pom.xml に s2-robot を 以下のように指定します。</p>
+<p>Maven 2 を利用している場合は、pom.xml に s2-robot を以下のように指定します。</p>
 <div class="source"><pre>  &lt;dependencies&gt;
     :
     &lt;dependency&gt;
@@ -160,11 +168,11 @@
     :
 &lt;/components&gt;</pre>
 </div>
-<p>この方法の場合、クロールできるファイル数は利用している メモリ量に依存します。また、実行しているプログラムの 終了時にクロール結果のデータは失います(利用している プログラム側で保存する必要があります)。</p>
+<p>この方法の場合、クロールできるファイル数は利用しているメモリ量に依存します。 また、実行しているプログラムの終了時にクロール結果のデータは失います(利用しているプログラム側で保存する必要があります)。</p>
 </div>
 <div class="section"><h3>クロール結果データの保存に DB を利用する場合</h3>
 <p>この方法は、大量にクロールする必要が場合などに適しています。 クロール結果の保存は DB を用いて行います(デフォルトでは H2Database を利用します)。</p>
-<p>Maven 2 を利用している場合は、pom.xml に s2-robot-db を 以下のように指定します。</p>
+<p>Maven 2 を利用している場合は、pom.xml に s2-robot-db を以下のように指定します。</p>
 <div class="source"><pre>  &lt;dependencies&gt;
     :
     &lt;dependency&gt;
@@ -177,7 +185,8 @@
 </div>
 <p>Maven 2 以外で利用する場合は、s2-robot、s2-robot-db および <a href="dependencies.html">依存関係</a>
  を参照して、必要な jar ファイルを追加してください。</p>
-<p>利用する DB を用意します。デフォルトでは H2Database を 利用するので、プロジェクトのトップディレクトリなどに コピーしてください。</p>
+<p>利用する DB を用意します。デフォルトでは H2Database を利用するので、プロジェクトのトップディレクトリなどにコピーしてください。 最新のデータは<a class="externalLink" href="https://www.seasar.org/svn/sandbox/s2robot/trunk/s2robot-db/src/main/db/">ここ</a>
+から取得できます。</p>
 <p>次に app.dicon などの dicon ファイルで s2robot_db.dicon を include します。</p>
 <div class="source"><pre>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
 &lt;!DOCTYPE components PUBLIC &quot;-//SEASAR//DTD S2Container 2.4//EN&quot;
@@ -224,8 +233,8 @@
 
 &lt;/components&gt;</pre>
 </div>
-<p>上記の場合はカレントディレクトリ下に db ディレクトリを作り、 その中に robot という H2Database の DB を作成した場合になります。</p>
-<p>以上で、ご利用のプロジェクトで S2Robot を利用することが できます。</p>
+<p>上記の場合はカレントディレクトリ下に db ディレクトリを作り、その中に robot という H2Database の DB を作成した場合になります。</p>
+<p>以上で、ご利用のプロジェクトで S2Robot を利用することができます。</p>
 </div>
 </div>
 

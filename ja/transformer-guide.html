@@ -1,0 +1,301 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+
+
+
+
+
+
+
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /> 
+<meta http-equiv="Content-Language" content="ja" /> 
+<meta http-equiv="Content-Style-Type" content="text/css" /> 
+<title>Seasar2 - Transformer の設定</title>
+<link rel="stylesheet" type="text/css" href="http://www.seasar.org/theme/main.css" media="screen,projection" />
+<link rel="stylesheet" type="text/css" href="http://www.seasar.org/theme/print.css" media="print" />
+<link href="./css/maven-base.css" type="text/css" rel="stylesheet" media="screen" />
+<link href="./css/maven-theme.css" type="text/css" rel="stylesheet" media="screen" />
+<link href="./css/prettify.css" type="text/css" rel="stylesheet" media="screen" />
+<script type="text/javascript" src="./js/prettify.js"></script>
+</head>
+
+<body onload="prettyPrint()">
+
+<div id="wrapper">
+
+<div id="header">
+
+<div class="line"><span class="hide">spacer</span></div>
+
+<div id="logo"><h1 id="h01" class="hide">The Seasar Foundation Project Site</h1><img src="http://www.seasar.org/images/seasar_logo_blue.gif" alt="The Seasar Foundation" width="390" height="180" /></div>
+
+<div id="tool">
+
+<h2><a href="http://search.seasar.org/">Site Search</a></h2>
+
+<form id="search" action="http://search.seasar.org/">
+<div>
+	<input id="search_phrase" type="text" name="phrase" size="20" />
+	<input type="hidden" name="perpage" value="30" />
+	<input type="hidden" name="enc" value="UTF-8" />
+	<input id="search_go" type="submit" value="Search" />
+</div>
+</form>
+
+<h2>Seasar Banner</h2>
+
+<p><a href="http://www.seasar.org/images/seasar_banner.gif"><img src="http://www.seasar.org/images/seasar_banner.gif" alt="Seasar Banner" title="Seasar Banner" width="146" height="33" /></a></p>
+
+</div>
+
+<div id="navi">
+<p><a href="./../en/">English</a> | <a href="./../ja/">Japanese</a></p>
+</div>
+
+</div><!-- header -->
+
+<div id="contents_left">
+           
+  
+
+  
+    
+  
+  
+                   <h2>About</h2>
+        <ul>
+              
+    <li class="none">
+              <a href="index.html">ホーム</a>
+        </li>
+              
+    <li class="none">
+              <a href="license.html">ライセンス</a>
+        </li>
+              
+    <li class="none">
+              <a href="downloads.html">ダウンロード</a>
+        </li>
+          </ul>
+          <h2>ドキュメント</h2>
+        <ul>
+              
+    <li class="none">
+              <a href="setup.html">セットアップ</a>
+        </li>
+              
+    <li class="none">
+              <a href="getting-started.html">使い方</a>
+        </li>
+              
+    <li class="none">
+              <a href="rule-guide.html">処理ルールの設定</a>
+        </li>
+              
+    <li class="none">
+              <strong>クロール結果変換方法</strong>
+        </li>
+          </ul>
+          <h2>プロジェクト文書</h2>
+        <ul>
+              
+                
+              
+      
+            
+      
+            
+      
+            
+      
+            
+      
+            
+      
+            
+      
+            
+      
+              
+        <li class="collapsed">
+              <a href="project-info.html">プロジェクト情報</a>
+              </li>
+          </ul>
+                                       <a href="http://maven.apache.org/" title="Built by Maven" id="poweredBy" name="poweredBy">
+            <img alt="Built by Maven" src="./images/logos/maven-feather.png" />
+          </a>
+                       
+  
+
+  
+    
+  
+  
+  </div><!-- contents_left -->
+
+<div id="contents_center">
+
+<div id="article">
+<div class="section"><h2>クロール結果変換方法</h2>
+<p>S2Robot では、クロールした結果を期待した形に変換することができます。 変換には、Transformer インターフェースを実装したコンポーネントを登録します。</p>
+<p>標準では、以下の Transformer があります。</p>
+<ul><li>Base64Transformer: ウェブコンテンツを Base64 で AccessResultData に保存します。 AccessResultData は文字列型を扱うため、画像などのバイナリデータを保存したい場合に便利です。 この Transformer が適用された場合は、この URL 以下の子 URL はクロールしません。</li>
+<li>FileTransformer: クロール結果をファイルとして保存します。 AccessResultData には保存したファイル名が登録されます。 クロールしたファイルが HTML の場合は、子の URL をクロールします。</li>
+<li>HtmlTransformer: クロールした結果を AccessResultData に保存します。 HTML を AccessResult の結果として扱いたい場合に利用します。 バイナリなどは保存できません。 クロールしたファイルが HTML の場合は、子の URL をクロールします。</li>
+<li>XpathTransformer: クロールした結果を XPath で指定した部分だけを抽出して AccessResultData に保存します。 クロールしたファイルが HTML の場合は、子の URL をクロールします。</li>
+</ul>
+<div class="section"><h3>設定方法</h3>
+<p>Transformer を追加する場合は、s2robot_transformer.dicon を作成してその中で定義します。 s2robot_transformer.dicon は s2robot_rule.dicon で include されます。 標準の s2robot_transformer.dicon は以下のように s2robot_transformer_basic.dicon を include しています。</p>
+<div class="source"><pre>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;!DOCTYPE components PUBLIC &quot;-//SEASAR//DTD S2Container 2.4//EN&quot;
+        &quot;http://www.seasar.org/dtd/components24.dtd&quot;&gt;
+&lt;components&gt;
+        &lt;include path=&quot;s2robot_transformer_basic.dicon&quot;/&gt;
+&lt;/components&gt;</pre>
+</div>
+<p>s2robot_transformer_basic.dicon は標準で利用可能な Transformer を定義しています。 このファイルは特に作成する必要はありません。</p>
+<div class="source"><pre>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;!DOCTYPE components PUBLIC &quot;-//SEASAR//DTD S2Container 2.4//EN&quot;
+        &quot;http://www.seasar.org/dtd/components24.dtd&quot;&gt;
+&lt;components&gt;
+        &lt;component name=&quot;base64Transformer&quot; class=&quot;org.seasar.robot.transformer.impl.Base64Transformer&quot; instance=&quot;singleton&quot;&gt;
+                &lt;property name=&quot;name&quot;&gt;&quot;base64Transformer&quot;&lt;/property&gt;
+        &lt;/component&gt;
+
+        &lt;component name=&quot;defaultFeatureMap&quot; class=&quot;java.util.LinkedHashMap&quot;&gt;
+                &lt;initMethod name=&quot;put&quot;&gt;
+                        &lt;arg&gt;&quot;http://xml.org/sax/features/namespaces&quot;&lt;/arg&gt;
+                        &lt;arg&gt;&quot;false&quot;&lt;/arg&gt;
+                &lt;/initMethod&gt;
+        &lt;/component&gt;
+
+        &lt;component name=&quot;defaultPropertyMap&quot; class=&quot;java.util.LinkedHashMap&quot;&gt;
+        &lt;/component&gt;
+
+        &lt;component name=&quot;allChildUrlRuleMap&quot; class=&quot;java.util.LinkedHashMap&quot;&gt;
+                &lt;initMethod name=&quot;put&quot;&gt;
+                        &lt;arg&gt;&quot;//A&quot;&lt;/arg&gt;
+                        &lt;arg&gt;&quot;href&quot;&lt;/arg&gt;
+                &lt;/initMethod&gt;
+                &lt;initMethod name=&quot;put&quot;&gt;
+                        &lt;arg&gt;&quot;//AREA&quot;&lt;/arg&gt;
+                        &lt;arg&gt;&quot;href&quot;&lt;/arg&gt;
+                &lt;/initMethod&gt;
+                &lt;initMethod name=&quot;put&quot;&gt;
+                        &lt;arg&gt;&quot;//FRAME&quot;&lt;/arg&gt;
+                        &lt;arg&gt;&quot;src&quot;&lt;/arg&gt;
+                &lt;/initMethod&gt;
+                &lt;initMethod name=&quot;put&quot;&gt;
+                        &lt;arg&gt;&quot;//IFRAME&quot;&lt;/arg&gt;
+                        &lt;arg&gt;&quot;src&quot;&lt;/arg&gt;
+                &lt;/initMethod&gt;
+                &lt;initMethod name=&quot;put&quot;&gt;
+                        &lt;arg&gt;&quot;//IMG&quot;&lt;/arg&gt;
+                        &lt;arg&gt;&quot;src&quot;&lt;/arg&gt;
+                &lt;/initMethod&gt;
+                &lt;initMethod name=&quot;put&quot;&gt;
+                        &lt;arg&gt;&quot;//LINK&quot;&lt;/arg&gt;
+                        &lt;arg&gt;&quot;href&quot;&lt;/arg&gt;
+                &lt;/initMethod&gt;
+                &lt;initMethod name=&quot;put&quot;&gt;
+                        &lt;arg&gt;&quot;//SCRIPT&quot;&lt;/arg&gt;
+                        &lt;arg&gt;&quot;src&quot;&lt;/arg&gt;
+                &lt;/initMethod&gt;
+        &lt;/component&gt;
+        &lt;component name=&quot;htmlUrlRuleMap&quot; class=&quot;java.util.LinkedHashMap&quot;&gt;
+                &lt;initMethod name=&quot;put&quot;&gt;
+                        &lt;arg&gt;&quot;//A&quot;&lt;/arg&gt;
+                        &lt;arg&gt;&quot;href&quot;&lt;/arg&gt;
+                &lt;/initMethod&gt;
+                &lt;initMethod name=&quot;put&quot;&gt;
+                        &lt;arg&gt;&quot;//AREA&quot;&lt;/arg&gt;
+                        &lt;arg&gt;&quot;href&quot;&lt;/arg&gt;
+                &lt;/initMethod&gt;
+                &lt;initMethod name=&quot;put&quot;&gt;
+                        &lt;arg&gt;&quot;//FRAME&quot;&lt;/arg&gt;
+                        &lt;arg&gt;&quot;src&quot;&lt;/arg&gt;
+                &lt;/initMethod&gt;
+                &lt;initMethod name=&quot;put&quot;&gt;
+                        &lt;arg&gt;&quot;//IFRAME&quot;&lt;/arg&gt;
+                        &lt;arg&gt;&quot;src&quot;&lt;/arg&gt;
+                &lt;/initMethod&gt;
+        &lt;/component&gt;
+       
+        &lt;component name=&quot;fileTransformer&quot; class=&quot;org.seasar.robot.transformer.impl.FileTransformer&quot; instance=&quot;singleton&quot;&gt;
+                &lt;property name=&quot;name&quot;&gt;&quot;fileTransformer&quot;&lt;/property&gt;
+                &lt;property name=&quot;featureMap&quot;&gt;defaultFeatureMap&lt;/property&gt;
+                &lt;property name=&quot;propertyMap&quot;&gt;defaultPropertyMap&lt;/property&gt;
+                &lt;property name=&quot;childUrlRuleMap&quot;&gt;allChildUrlRuleMap&lt;/property&gt;
+        &lt;/component&gt;
+
+        &lt;component name=&quot;htmlTransformer&quot; class=&quot;org.seasar.robot.transformer.impl.HtmlTransformer&quot; instance=&quot;singleton&quot;&gt;
+                &lt;property name=&quot;name&quot;&gt;&quot;htmlTransformer&quot;&lt;/property&gt;
+                &lt;property name=&quot;featureMap&quot;&gt;defaultFeatureMap&lt;/property&gt;
+                &lt;property name=&quot;propertyMap&quot;&gt;defaultPropertyMap&lt;/property&gt;
+                &lt;property name=&quot;childUrlRuleMap&quot;&gt;allChildUrlRuleMap&lt;/property&gt;
+        &lt;/component&gt;
+
+        &lt;component name=&quot;htmlOnlyTransformer&quot; class=&quot;org.seasar.robot.transformer.impl.HtmlTransformer&quot; instance=&quot;singleton&quot;&gt;
+                &lt;property name=&quot;name&quot;&gt;&quot;htmlTransformer&quot;&lt;/property&gt;
+                &lt;property name=&quot;featureMap&quot;&gt;defaultFeatureMap&lt;/property&gt;
+                &lt;property name=&quot;propertyMap&quot;&gt;defaultPropertyMap&lt;/property&gt;
+                &lt;property name=&quot;childUrlRuleMap&quot;&gt;htmlUrlRuleMap&lt;/property&gt;
+        &lt;/component&gt;
+&lt;/components&gt;</pre>
+</div>
+<p>例えば、XpathTransformer を使用して、title タグと body タグ以下の内容を抽出して AccessResultData に保存したい場合は、s2robot_transformer.dicon を以下のようにします。</p>
+<div class="source"><pre>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;!DOCTYPE components PUBLIC &quot;-//SEASAR//DTD S2Container 2.4//EN&quot;
+        &quot;http://www.seasar.org/dtd/components24.dtd&quot;&gt;
+&lt;components&gt;
+        &lt;include path=&quot;s2robot_transformer_basic.dicon&quot;/&gt;
+
+        &lt;component name=&quot;xpathTransformer&quot; class=&quot;org.seasar.robot.transformer.impl.XpathTransformer&quot; instance=&quot;singleton&quot;&gt;
+                &lt;property name=&quot;name&quot;&gt;&quot;htmlTransformer&quot;&lt;/property&gt;
+                &lt;property name=&quot;featureMap&quot;&gt;defaultFeatureMap&lt;/property&gt;
+                &lt;property name=&quot;propertyMap&quot;&gt;defaultPropertyMap&lt;/property&gt;
+                &lt;property name=&quot;childUrlRuleMap&quot;&gt;htmlUrlRuleMap&lt;/property&gt;
+                &lt;initMethod name=&quot;addFieldRule&quot;&gt;
+                        &lt;arg&gt;&quot;title&quot;&lt;/arg&gt;
+                        &lt;arg&gt;&quot;//TITLE&quot;&lt;/arg&gt;
+                &lt;/initMethod&gt;
+                &lt;initMethod name=&quot;addFieldRule&quot;&gt;
+                        &lt;arg&gt;&quot;body&quot;&lt;/arg&gt;
+                        &lt;arg&gt;&quot;//BODY&quot;&lt;/arg&gt;
+                &lt;/initMethod&gt;
+        &lt;/component&gt;
+&lt;/components&gt;</pre>
+</div>
+<p>AccessResultData に保存されるデータは以下のようになります。</p>
+<div class="source"><pre>&lt;?xml version=&quot;1.0&quot;?&gt;
+&lt;doc&gt;
+&lt;field name=&quot;title&quot;&gt;タイトル&lt;/field&gt;
+&lt;field name=&quot;body&quot;&gt;第一章 第一節 ほげほげふがふが LINK 第2章 第2節&lt;/field&gt;
+&lt;/doc&gt;</pre>
+</div>
+</div>
+</div>
+
+</div><!-- article -->
+
+</div><!-- contents_center -->
+
+<div id="footer">
+<address>  &copy; Copyright
+  
+          2009,
+    
+          The Seasar Foundation and the others. All rights reserved.
+      </address>
+<div class="line"><span class="hide">spacer</span></div>
+</div><!-- footer -->
+
+</div><!-- wrapper -->
+
+</body>
+</html>
