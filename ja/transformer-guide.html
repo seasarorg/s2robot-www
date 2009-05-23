@@ -100,6 +100,10 @@
     <li class="none">
               <strong>クロール結果変換方法</strong>
         </li>
+              
+    <li class="none">
+              <a href="../apidocs/index.html">JavaDoc</a>
+        </li>
           </ul>
           <h2>プロジェクト文書</h2>
         <ul>
@@ -144,7 +148,7 @@
 <div class="section"><h2>クロール結果変換方法</h2>
 <p>S2Robot では、クロールした結果を期待した形に変換することができます。 変換には、Transformer インターフェースを実装したコンポーネントを登録します。</p>
 <p>標準では、以下の Transformer があります。</p>
-<ul><li>Base64Transformer: ウェブコンテンツを Base64 で AccessResultData に保存します。 AccessResultData は文字列型を扱うため、画像などのバイナリデータを保存したい場合に便利です。 この Transformer が適用された場合は、この URL 以下の子 URL はクロールしません。</li>
+<ul><li>BinaryTransformer: ウェブコンテンツをバイナリで AccessResultData に保存します。 画像などのバイナリデータを保存したい場合に便利です。 この Transformer が適用された場合は、この URL 以下の子 URL はクロールしません。</li>
 <li>FileTransformer: クロール結果をファイルとして保存します。 AccessResultData には保存したファイル名が登録されます。 クロールしたファイルが HTML の場合は、子の URL をクロールします。</li>
 <li>HtmlTransformer: クロールした結果を AccessResultData に保存します。 HTML を AccessResult の結果として扱いたい場合に利用します。 バイナリなどは保存できません。 クロールしたファイルが HTML の場合は、子の URL をクロールします。</li>
 <li>XpathTransformer: クロールした結果を XPath で指定した部分だけを抽出して AccessResultData に保存します。 クロールしたファイルが HTML の場合は、子の URL をクロールします。</li>
@@ -163,8 +167,8 @@
 &lt;!DOCTYPE components PUBLIC &quot;-//SEASAR//DTD S2Container 2.4//EN&quot;
         &quot;http://www.seasar.org/dtd/components24.dtd&quot;&gt;
 &lt;components&gt;
-        &lt;component name=&quot;base64Transformer&quot; class=&quot;org.seasar.robot.transformer.impl.Base64Transformer&quot; instance=&quot;singleton&quot;&gt;
-                &lt;property name=&quot;name&quot;&gt;&quot;base64Transformer&quot;&lt;/property&gt;
+        &lt;component name=&quot;binaryTransformer&quot; class=&quot;org.seasar.robot.transformer.impl.BinaryTransformer&quot; instance=&quot;singleton&quot;&gt;
+                &lt;property name=&quot;name&quot;&gt;&quot;binaryTransformer&quot;&lt;/property&gt;
         &lt;/component&gt;
 
         &lt;component name=&quot;defaultFeatureMap&quot; class=&quot;java.util.LinkedHashMap&quot;&gt;
