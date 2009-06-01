@@ -104,12 +104,20 @@
     <li class="none">
               <a href="../apidocs/index.html">JavaDoc</a>
         </li>
+              
+    <li class="none">
+              <a href="s2robot-example.html">S2Robot-example の実行方法</a>
+        </li>
           </ul>
           <h2>プロジェクト文書</h2>
         <ul>
               
                 
               
+      
+            
+      
+            
       
             
       
@@ -129,6 +137,14 @@
             <li class="expanded">
               <a href="project-info.html">プロジェクト情報</a>
                 <ul>
+                  
+    <li class="none">
+              <a href="plugin-management.html">Plugin Management</a>
+        </li>
+                  
+    <li class="none">
+              <a href="plugins.html">Project Plugins</a>
+        </li>
                   
     <li class="none">
               <a href="source-repository.html">ソースリポジトリ</a>
@@ -188,24 +204,16 @@
 <th>名前</th>
 <th>電子メール</th>
 <th>URL</th>
-<th>組織</th>
-<th>組織のURL</th>
-<th>役割</th>
 <th>タイムゾーン</th>
 <th>実際の時間 (GMT)</th>
-<th>属性</th>
 </tr>
-<tr class="b"><td>shinsuke</td>
+<tr class="b"><td><a name="shinsuke"></a>shinsuke</td>
 <td>Shinsuke Sugaya</td>
 <td>shinsuke_at_yahoo.co.jp</td>
-<td><a href="http://d.hatena.ne.jp/shinsuke_sugaya/" class="externalLink">http://d.hatena.ne.jp/shinsuke_sugaya/</a>
+<td><a class="externalLink" href="http://d.hatena.ne.jp/shinsuke_sugaya/">http://d.hatena.ne.jp/shinsuke_sugaya/</a>
 </td>
-<td>-</td>
-<td>-</td>
-<td>-</td>
 <td>+9</td>
 <td><span id="developer-0">+9</span></td>
-<td>-</td>
 </tr>
 </table>
 </div>
@@ -218,7 +226,7 @@ function offsetDate(id, offset) {
     var now = new Date();
     var nowTime = now.getTime();
     var localOffset = now.getTimezoneOffset();
-    var developerTime = nowTime + ( offset * 60 * 60 * 1000 ) + ( localOffset * 60 * 1000 );
+    var developerTime = nowTime + ( offset * 60 * 60 * 1000 )+ ( localOffset * 60 * 1000 );
     var developerDate = new Date(developerTime);
 
     document.getElementById(id).innerHTML = developerDate;
