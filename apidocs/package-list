@@ -1,5 +1,4 @@
 org.seasar.robot
-org.seasar.robot.config
 org.seasar.robot.entity
 org.seasar.robot.filter
 org.seasar.robot.filter.impl
