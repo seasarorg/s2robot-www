@@ -98,6 +98,17 @@
         </li>
               
     <li class="none">
+              <a href="../apidocs/index.html">JavaDoc</a>
+        </li>
+              
+    <li class="none">
+              <a href="s2robot-example.html">S2Robot-example の実行方法</a>
+        </li>
+          </ul>
+          <h2>各種設定</h2>
+        <ul>
+              
+    <li class="none">
               <strong>処理ルールの設定</strong>
         </li>
               
@@ -106,11 +117,7 @@
         </li>
               
     <li class="none">
-              <a href="../apidocs/index.html">JavaDoc</a>
-        </li>
-              
-    <li class="none">
-              <a href="s2robot-example.html">S2Robot-example の実行方法</a>
+              <a href="interval-generator-guide.html">アクセス間隔の設定</a>
         </li>
           </ul>
           <h2>プロジェクト文書</h2>
@@ -163,32 +170,40 @@
 <p>s2robot_rule.dicon を作成してそこの中で定義します。 デフォルトでは、以下のような s2robot_rule.dicon が適用されます。</p>
 <div class="source"><pre>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
 &lt;!DOCTYPE components PUBLIC &quot;-//SEASAR//DTD S2Container 2.4//EN&quot;
-        &quot;http://www.seasar.org/dtd/components24.dtd&quot;&gt;
+    &quot;http://www.seasar.org/dtd/components24.dtd&quot;&gt;
 &lt;components&gt;
     &lt;include path=&quot;s2robot_transformer.dicon&quot;/&gt;
 
-        &lt;component name=&quot;ruleManager&quot; class=&quot;org.seasar.robot.rule.impl.RuleManagerImpl&quot; instance=&quot;singleton&quot;&gt;
-                &lt;initMethod name=&quot;addRule&quot;&gt;
-                        &lt;arg&gt;fileRule&lt;/arg&gt;
-                &lt;/initMethod&gt;
-        &lt;/component&gt;
+    &lt;component name=&quot;ruleManager&quot; class=&quot;org.seasar.robot.rule.impl.RuleManagerImpl&quot; instance=&quot;prototype&quot;&gt;
+        &lt;initMethod name=&quot;addRule&quot;&gt;
+            &lt;arg&gt;fileRule&lt;/arg&gt;
+        &lt;/initMethod&gt;
+    &lt;/component&gt;
 
-        &lt;component name=&quot;fileRule&quot; class=&quot;org.seasar.robot.rule.Rule&quot; &gt;
-                &lt;property name=&quot;defaultRule&quot;&gt;true&lt;/property&gt;
-                &lt;property name=&quot;transformer&quot;&gt;fileTransformer&lt;/property&gt;
-        &lt;/component&gt;
+    &lt;component name=&quot;fileRule&quot; class=&quot;org.seasar.robot.rule.impl.RegexRule&quot; &gt;
+        &lt;property name=&quot;defaultRule&quot;&gt;true&lt;/property&gt;
+        &lt;property name=&quot;transformer&quot;&gt;fileTransformer&lt;/property&gt;
+    &lt;/component&gt;
 &lt;/components&gt;</pre>
 </div>
 <p>ruleManager が S2Robot 内の複数のルールを管理します。 addRule することで複数の処理ルールを追加することができます。</p>
 <p>Rule クラスを登録して、そこに適用する Transformer をセットして、ruleManager に追加することで有効になります。 Rule クラスは、ruleManager から boolean match(ResponseData) メソッドを呼ばれ、true を返すと、その URL に適用されます。 (現時点では、Rule を順に確認して、先にマッチしたものだけが適用されます。将来的には複数適用予定) ここでは、fileRule は defaultRule が true としているので、すべての Rule で適用されます。</p>
 <p>例えば、コンテンツタイプ(MIMEタイプ部分)が text/html で、URL が http://www.example.com/ で始まり html で終わるようなものだけを対象にする場合は以下のようになります。</p>
-<div class="source"><pre>&lt;component name=&quot;htmlRule&quot; class=&quot;org.seasar.robot.rule.Rule&quot; &gt;
-    &lt;property name=&quot;ruleId&quot;&gt;&quot;html&quot;&lt;/property&gt;
-    &lt;property name=&quot;mimeType&quot;&gt;&quot;text/html&quot;&lt;/property&gt;
-    &lt;property name=&quot;urlPatternRegex&quot;&gt;&quot;http://www.example.com/.*html&quot;&lt;/property&gt;
-    &lt;property name=&quot;transformer&quot;&gt;fileTransformer&lt;/property&gt;
-&lt;/component&gt;</pre>
+<div class="source"><pre>    &lt;component name=&quot;htmlRule&quot; class=&quot;org.seasar.robot.rule.impl.RegexRule&quot; &gt;
+        &lt;property name=&quot;ruleId&quot;&gt;&quot;htmlRule&quot;&lt;/property&gt;
+        &lt;property name=&quot;transformer&quot;&gt;fileTransformer&lt;/property&gt;
+        &lt;property name=&quot;allRequired&quot;&gt;true&lt;/property&gt;
+        &lt;initMethod name=&quot;addRule&quot;&gt;
+            &lt;arg&gt;&quot;url&quot;&lt;/arg&gt;
+            &lt;arg&gt;&quot;http://www.example.com/.*html&quot;&lt;/arg&gt;
+        &lt;/initMethod&gt;
+        &lt;initMethod name=&quot;addRule&quot;&gt;
+            &lt;arg&gt;&quot;mimeType&quot;&lt;/arg&gt;
+            &lt;arg&gt;&quot;text/html&quot;&lt;/arg&gt;
+        &lt;/initMethod&gt;
+    &lt;/component&gt;</pre>
 </div>
+<p>allRequired を true にすることで、addRule で指定した条件がすべて満たすもの (AND 条件) がマッチするようになります。 false にすることで OR 条件で評価されます。</p>
 </div>
 </div>
 

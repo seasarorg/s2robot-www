@@ -1,10 +1,13 @@
 org.seasar.robot
+org.seasar.robot.client
+org.seasar.robot.client.fs
+org.seasar.robot.client.http
 org.seasar.robot.entity
+org.seasar.robot.extractor
+org.seasar.robot.extractor.impl
 org.seasar.robot.filter
 org.seasar.robot.filter.impl
 org.seasar.robot.helper
-org.seasar.robot.http
-org.seasar.robot.http.impl
 org.seasar.robot.interval
 org.seasar.robot.interval.impl
 org.seasar.robot.rule
