@@ -131,6 +131,10 @@
     <li class="none">
               <a href="url-filter-guide.html">URL フィルタの設定</a>
         </li>
+              
+    <li class="none">
+              <a href="extractor-guide.html">文字列抽出</a>
+        </li>
           </ul>
           <h2>プロジェクト文書</h2>
         <ul>
@@ -192,18 +196,21 @@
         &lt;/initMethod&gt;
     &lt;/component&gt;
 
-    &lt;component name=&quot;fileRule&quot; class=&quot;org.seasar.robot.rule.impl.RegexRule&quot; &gt;
+    &lt;component name=&quot;fileRule&quot; class=&quot;org.seasar.robot.rule.impl.RegexRule&quot;&gt;
         &lt;property name=&quot;defaultRule&quot;&gt;true&lt;/property&gt;
-        &lt;property name=&quot;transformer&quot;&gt;fileTransformer&lt;/property&gt;
+        &lt;property name=&quot;responseProcessor&quot;&gt;
+            &lt;component class=&quot;org.seasar.robot.processor.impl.DefaultResponseProcessor&quot;&gt;
+                &lt;property name=&quot;transformer&quot;&gt;fileTransformer&lt;/property&gt;
+            &lt;/component&gt;
+        &lt;/property&gt;
     &lt;/component&gt;
 &lt;/components&gt;</pre>
 </div>
 <p>ruleManager が S2Robot 内の複数のルールを管理します。 addRule することで複数の処理ルールを追加することができます。</p>
-<p>Rule クラスを登録して、そこに適用する Transformer をセットして、ruleManager に追加することで有効になります。 Rule クラスは、ruleManager から boolean match(ResponseData) メソッドを呼ばれ、true を返すと、その URL に適用されます。 (現時点では、Rule を順に確認して、先にマッチしたものだけが適用されます。将来的には複数適用予定) ここでは、fileRule は defaultRule が true としているので、すべての Rule で適用されます。</p>
+<p>Rule クラスを登録して、そこに適用する ResponseProcessor をセットして、ruleManager に追加することで有効になります。 Rule クラスは、ruleManager から boolean match(ResponseData) メソッドを呼ばれ、true を返すと、その URL に適用されます。 (現時点では、Rule を順に確認して、先にマッチしたものだけが適用されます。将来的には複数適用予定) ここでは、fileRule は defaultRule が true としているので、すべての Rule で適用されます。</p>
 <p>例えば、コンテンツタイプ(MIMEタイプ部分)が text/html で、URL が http://www.example.com/ で始まり html で終わるようなものだけを対象にする場合は以下のようになります。</p>
 <div class="source"><pre>    &lt;component name=&quot;htmlRule&quot; class=&quot;org.seasar.robot.rule.impl.RegexRule&quot; &gt;
         &lt;property name=&quot;ruleId&quot;&gt;&quot;htmlRule&quot;&lt;/property&gt;
-        &lt;property name=&quot;transformer&quot;&gt;fileTransformer&lt;/property&gt;
         &lt;property name=&quot;allRequired&quot;&gt;true&lt;/property&gt;
         &lt;initMethod name=&quot;addRule&quot;&gt;
             &lt;arg&gt;&quot;url&quot;&lt;/arg&gt;
@@ -213,6 +220,11 @@
             &lt;arg&gt;&quot;mimeType&quot;&lt;/arg&gt;
             &lt;arg&gt;&quot;text/html&quot;&lt;/arg&gt;
         &lt;/initMethod&gt;
+        &lt;property name=&quot;responseProcessor&quot;&gt;
+            &lt;component class=&quot;org.seasar.robot.processor.impl.DefaultResponseProcessor&quot;&gt;
+                &lt;property name=&quot;transformer&quot;&gt;fileTransformer&lt;/property&gt;
+            &lt;/component&gt;
+        &lt;/property&gt;
     &lt;/component&gt;</pre>
 </div>
 <p>allRequired を true にすることで、addRule で指定した条件がすべて満たすもの (AND 条件) がマッチするようになります。 false にすることで OR 条件で評価されます。</p>

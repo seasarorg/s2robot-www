@@ -10,6 +10,8 @@ org.seasar.robot.filter.impl
 org.seasar.robot.helper
 org.seasar.robot.interval
 org.seasar.robot.interval.impl
+org.seasar.robot.processor
+org.seasar.robot.processor.impl
 org.seasar.robot.rule
 org.seasar.robot.rule.impl
 org.seasar.robot.service

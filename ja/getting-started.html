@@ -131,6 +131,10 @@
     <li class="none">
               <a href="url-filter-guide.html">URL フィルタの設定</a>
         </li>
+              
+    <li class="none">
+              <a href="extractor-guide.html">文字列抽出</a>
+        </li>
           </ul>
           <h2>プロジェクト文書</h2>
         <ul>
@@ -177,16 +181,16 @@
 
 <div id="article">
 <div class="section"><h2>使い方</h2>
-<p>S2Robot は S2Robot のインスタンスを DI することで簡単に利用することができます。 S2Robot のコンポーネントの定義は、s2robot.dicon または s2robot_db.dicon に記述されています。</p>
+<p>S2Robot は S2Robot のインスタンスを DI することで簡単に利用することができます。 S2Robot のコンポーネントの定義は、s2robot.dicon (オンメモリ版) または s2robot_db.dicon (DB利用版) に記述されています。</p>
 <div class="section"><h3>実行方法</h3>
-<p>S2Robot のコンポーネントを取得して、巡回対象の URL を追加します。 URL は複数登録可能です。あとは、必要に応じて、巡回する深さや巡回 URL 数を指定します。execute() メソッドを実行することで、クロールを開始します。</p>
+<p>S2Robot のコンポーネントを取得して、巡回対象の URL を追加します。 URL は複数登録可能です。 あとは、必要に応じて、巡回する深さや巡回 URL 数を指定します。 execute() メソッドを実行することで、クロールを開始します。</p>
 <div class="source"><pre>    // container から取得する場合
     S2Robot s2Robot = (S2Robot) container.getComponent(S2Robot.class);
 
     // URL の追加 (この URL 以下を巡回します)
     s2Robot.addUrl(url);
     // 巡回する深さを指定
-    s2Robot.getRobotConfig().setMaxDepth(depth);
+    s2Robot.getRobotContext().setMaxDepth(depth);
 
     // クロールの実行 (実行時のセッション ID が返ります)
     String sessionId = s2Robot.execute();
@@ -194,29 +198,32 @@
     // クロール結果の消去 (必要な場合に実行)
     s2Robot.cleanup(sessionId);</pre>
 </div>
-<p>デフォルトの動作は、FileTransformer が適用され、カレントディレクトリに巡回した URL のファイルを保存します。 s2robot-db を利用している場合は、上記に加えて、クロール結果を DB にも保存します。</p>
+<p>デフォルトの動作は、FileTransformer が適用され、カレントディレクトリに巡回した URL のコンテンツをファイルとして保存します。 s2robot-db を利用している場合は、上記に加えて、クロール結果を DB にも保存します。</p>
 </div>
-<div class="section"><h3>クローラの設定情報 (S2RobotConfig)</h3>
-<p>S2Robot のパラメータは S2RobotConfig が保持しています。 値を変更する場合は、クラスパスに s2robot_config.dicon を置き、設定情報を上書きします。</p>
+<div class="section"><h3>クローラの設定情報</h3>
+<p>S2Robot のパラメータは S2RobotContext が保持しています。 値を変更する場合は、クラスパスに s2robot.dicon を置き、設定情報を上書きします。 (ソースコード上でもメソッド呼出により変更可能です)</p>
 <div class="source"><pre>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
 &lt;!DOCTYPE components PUBLIC &quot;-//SEASAR//DTD S2Container 2.4//EN&quot;
     &quot;http://www.seasar.org/dtd/components24.dtd&quot;&gt;
 &lt;components&gt;
-  &lt;component name=&quot;robotConfig&quot; class=&quot;org.seasar.robot.S2RobotConfig&quot; &gt;
+  :
+  &lt;component name=&quot;s2Robot&quot; class=&quot;org.seasar.robot.S2Robot&quot; instance=&quot;prototype&quot; &gt;
     &lt;property name=&quot;numOfThread&quot;&gt;10&lt;/property&gt;
     &lt;property name=&quot;maxThreadCheckCount&quot;&gt;20&lt;/property&gt;
-    &lt;property name=&quot;threadCheckInterval&quot;&gt;500&lt;/property&gt;
     &lt;property name=&quot;maxDepth&quot;&gt;-1&lt;/property&gt;
     &lt;property name=&quot;maxAccessCount&quot;&gt;0&lt;/property&gt;
   &lt;/component&gt;
+  :
 &lt;/components&gt;</pre>
 </div>
 <ul><li>numOfThread: クロール実行時のスレッド数</li>
 <li>maxThreadCheckCount: 他のスレッドが実行中で、巡回 URL キューが空の場合に待つ回数</li>
-<li>threadCheckInterval: 他のスレッドが実行中で、巡回 URL キューが空の場合に待つミリ秒数</li>
 <li>maxDepth: 巡回する深さ</li>
 <li>maxAccessCount: 巡回する回数</li>
 </ul>
+</div>
+<div class="section"><h3>クロール結果の処理 (Rule, ResponseProcessor, Transformer)</h3>
+<p>クロール結果の処理内容を定義することができます。 Rule によりクロールした結果の処理方法を選択して、ResponseProcessor でクロール結果を処理することが可能です。 Transformer はクロールして得たレスポンス内容を別な形式に変換します。 これらの処理内容は dicon ファイル内で定義することができます。</p>
 </div>
 <div class="section"><h3>クロール結果の取得 (DataService)</h3>
 <p>クロール結果は DataSerivce インターフェースで取得することができます。 次のメソッドが提供されています。</p>

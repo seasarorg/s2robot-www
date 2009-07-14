@@ -1,0 +1,283 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+
+
+
+
+
+
+
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /> 
+<meta http-equiv="Content-Language" content="ja" /> 
+<meta http-equiv="Content-Style-Type" content="text/css" /> 
+<title>Seasar2 - Extractor の設定</title>
+<link rel="stylesheet" type="text/css" href="http://www.seasar.org/theme/main.css" media="screen,projection" />
+<link rel="stylesheet" type="text/css" href="http://www.seasar.org/theme/print.css" media="print" />
+<link href="./css/maven-base.css" type="text/css" rel="stylesheet" media="screen" />
+<link href="./css/maven-theme.css" type="text/css" rel="stylesheet" media="screen" />
+<link href="./css/prettify.css" type="text/css" rel="stylesheet" media="screen" />
+<script type="text/javascript" src="./js/prettify.js"></script>
+</head>
+
+<body onload="prettyPrint()">
+
+<div id="wrapper">
+
+<div id="header">
+
+<div class="line"><span class="hide">spacer</span></div>
+
+<div id="logo"><h1 id="h01" class="hide">The Seasar Project</h1><a href="http://www.seasar.org/" alt="The Seasar Project" title="The Seasar Project"><img src="http://www.seasar.org/images/seasar_logo_blue.gif" alt="The Seasar Project" width="390" height="180" /></a></div>
+
+<div id="tool">
+
+<h2><a href="http://search.seasar.org/">Site Search</a></h2>
+
+<form id="search" action="http://search.seasar.org/">
+<div>
+	<input id="search_phrase" type="text" name="phrase" size="20" />
+	<input type="hidden" name="perpage" value="30" />
+	<input type="hidden" name="enc" value="UTF-8" />
+	<input id="search_go" type="submit" value="Search" />
+</div>
+</form>
+
+<h2>Seasar Banner</h2>
+              <span id="bannerLeft">
+    
+            S2Robot
+    
+            </span>
+      
+</div>
+
+<div id="navi">
+	<p id="navi_left">  </p>
+	<p id="navi_right"><a href="./../en/">English</a> | <a href="./../ja/">Japanese</a></p>
+</div>
+
+</div><!-- header -->
+
+<div id="contents_left">
+           
+  
+
+  
+    
+  
+  
+                   <h2>About</h2>
+        <ul>
+              
+    <li class="none">
+              <a href="index.html">ホーム</a>
+        </li>
+              
+    <li class="none">
+              <a href="license.html">ライセンス</a>
+        </li>
+              
+    <li class="none">
+              <a href="downloads.html">ダウンロード</a>
+        </li>
+              
+    <li class="none">
+              <a href="https://www.seasar.org/issues/browse/ROBOT">課題報告</a>
+        </li>
+          </ul>
+          <h2>ドキュメント</h2>
+        <ul>
+              
+    <li class="none">
+              <a href="setup.html">セットアップ</a>
+        </li>
+              
+    <li class="none">
+              <a href="getting-started.html">使い方</a>
+        </li>
+              
+    <li class="none">
+              <a href="../apidocs/index.html">JavaDoc</a>
+        </li>
+              
+    <li class="none">
+              <a href="s2robot-example.html">S2Robot-example</a>
+        </li>
+          </ul>
+          <h2>各種設定</h2>
+        <ul>
+              
+    <li class="none">
+              <a href="rule-guide.html">処理ルールの設定</a>
+        </li>
+              
+    <li class="none">
+              <a href="transformer-guide.html">クロール結果変換方法</a>
+        </li>
+              
+    <li class="none">
+              <a href="interval-controller-guide.html">アクセス間隔の設定</a>
+        </li>
+              
+    <li class="none">
+              <a href="background-guide.html">バックグラウンドで実行</a>
+        </li>
+              
+    <li class="none">
+              <a href="url-filter-guide.html">URL フィルタの設定</a>
+        </li>
+              
+    <li class="none">
+              <strong>文字列抽出</strong>
+        </li>
+          </ul>
+          <h2>プロジェクト文書</h2>
+        <ul>
+              
+                
+              
+      
+            
+      
+            
+      
+            
+      
+            
+      
+            
+      
+            
+      
+            
+      
+            
+      
+            
+      
+              
+        <li class="collapsed">
+              <a href="project-info.html">プロジェクト情報</a>
+              </li>
+          </ul>
+                                       <a href="http://maven.apache.org/" title="Built by Maven" id="poweredBy" name="poweredBy">
+            <img alt="Built by Maven" src="./images/logos/maven-feather.png" />
+          </a>
+                       
+  
+
+  
+    
+  
+  
+  </div><!-- contents_left -->
+
+<div id="contents_center">
+
+<div id="article">
+<div class="section"><h2>ファイルからの文字列抽出方法</h2>
+<p>S2Robot では、ファイルから文字列を抽出する方法として、Extractor を提供しています。 Extractor は ExtractorFactory から MIME タイプをキーとして取得することができます。 また、dicon ファイルの設定により自由に Extractor を追加、削除することが可能です。</p>
+<p>本機能は、S2Robot のクローリング機能とは独立しているので、ファイルからの文字列抽出をしたい場合に利用可能です。 Extractor だけ利用したい場合は、s2robot_extractor.dicon を include してください。</p>
+<div class="section"><h3>設定方法</h3>
+<p>Extractor をカスタマイズする場合は、s2robot_extractor.dicon を作成してその中で定義します。 標準の s2robot_extractor.dicon は以下になります。</p>
+<div class="source"><pre>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;!DOCTYPE components PUBLIC &quot;-//SEASAR//DTD S2Container 2.4//EN&quot;
+        &quot;http://www.seasar.org/dtd/components24.dtd&quot;&gt;
+&lt;components&gt;
+        &lt;component name=&quot;msWordExtractor&quot; class=&quot;org.seasar.robot.extractor.impl.MsWordExtractor&quot;/&gt;
+        &lt;component name=&quot;msExcelExtractor&quot; class=&quot;org.seasar.robot.extractor.impl.MsExcelExtractor&quot;/&gt;
+        &lt;component name=&quot;msPowerPointExtractor&quot; class=&quot;org.seasar.robot.extractor.impl.MsPowerPointExtractor&quot;/&gt;
+        &lt;component name=&quot;msPublisherExtractor&quot; class=&quot;org.seasar.robot.extractor.impl.MsPublisherExtractor&quot;/&gt;
+        &lt;component name=&quot;msVisioExtractor&quot; class=&quot;org.seasar.robot.extractor.impl.MsVisioExtractor&quot;/&gt;
+        &lt;component name=&quot;pdfExtractor&quot; class=&quot;org.seasar.robot.extractor.impl.PdfExtractor&quot;/&gt;
+        &lt;component name=&quot;textExtractor&quot; class=&quot;org.seasar.robot.extractor.impl.TextExtractor&quot;/&gt;
+        &lt;component name=&quot;htmlExtractor&quot; class=&quot;org.seasar.robot.extractor.impl.HtmlExtractor&quot;/&gt;
+
+        &lt;component name=&quot;extractorFactory&quot; class=&quot;org.seasar.robot.extractor.ExtractorFactory&quot;&gt;
+                &lt;initMethod name=&quot;addExtractor&quot;&gt;
+                        &lt;arg&gt;&quot;application/msword&quot;&lt;/arg&gt;
+                        &lt;arg&gt;msWordExtractor&lt;/arg&gt;
+                &lt;/initMethod&gt;
+                &lt;initMethod name=&quot;addExtractor&quot;&gt;
+                        &lt;arg&gt;&quot;application/vnd.ms-excel&quot;&lt;/arg&gt;
+                        &lt;arg&gt;msExcelExtractor&lt;/arg&gt;
+                &lt;/initMethod&gt;
+                &lt;initMethod name=&quot;addExtractor&quot;&gt;
+                        &lt;arg&gt;&quot;application/vnd.ms-powerpoint&quot;&lt;/arg&gt;
+                        &lt;arg&gt;msPowerPointExtractor&lt;/arg&gt;
+                &lt;/initMethod&gt;
+                &lt;initMethod name=&quot;addExtractor&quot;&gt;
+                        &lt;arg&gt;&quot;application/vnd.ms-publisher&quot;&lt;/arg&gt;
+                        &lt;arg&gt;msPublisherExtractor&lt;/arg&gt;
+                &lt;/initMethod&gt;
+                &lt;initMethod name=&quot;addExtractor&quot;&gt;
+                        &lt;arg&gt;&quot;application/vnd.visio&quot;&lt;/arg&gt;
+                        &lt;arg&gt;msVisioExtractor&lt;/arg&gt;
+                &lt;/initMethod&gt;
+                &lt;initMethod name=&quot;addExtractor&quot;&gt;
+                        &lt;arg&gt;&quot;application/pdf&quot;&lt;/arg&gt;
+                        &lt;arg&gt;pdfExtractor&lt;/arg&gt;
+                &lt;/initMethod&gt;
+                &lt;initMethod name=&quot;addExtractor&quot;&gt;
+                        &lt;arg&gt;&quot;text/plain&quot;&lt;/arg&gt;
+                        &lt;arg&gt;textExtractor&lt;/arg&gt;
+                &lt;/initMethod&gt;
+                &lt;initMethod name=&quot;addExtractor&quot;&gt;
+                        &lt;arg&gt;&quot;text/html&quot;&lt;/arg&gt;
+                        &lt;arg&gt;htmlExtractor&lt;/arg&gt;
+                &lt;/initMethod&gt;
+                &lt;initMethod name=&quot;addExtractor&quot;&gt;
+                        &lt;arg&gt;&quot;application/csv&quot;&lt;/arg&gt;
+                        &lt;arg&gt;textExtractor&lt;/arg&gt;
+                &lt;/initMethod&gt;
+                &lt;initMethod name=&quot;addExtractor&quot;&gt;
+                        &lt;arg&gt;&quot;application/xml+xhtml&quot;&lt;/arg&gt;
+                        &lt;arg&gt;htmlExtractor&lt;/arg&gt;
+                &lt;/initMethod&gt;
+        &lt;/component&gt;
+
+&lt;/components&gt;
+</pre>
+</div>
+<p>標準では、MS Office 系ファイルや PDF ファイルからの文字列抽出が可能です。 ただし、POI や PDFBox の jar ファイルが必要になります。</p>
+</div>
+<div class="section"><h3>使用方法</h3>
+<p>以下のように ExtractorFactory を DI して、利用することができます。</p>
+<div class="source"><pre>    @Resource
+    protected ExtractorFactory extractorFactory;
+    :
+    InputStream in = ... ex. new FileInputStream(&quot;/tmp/text.doc&quot;) ...;
+    String mimeType = ... ex. &quot;application/msword&quot; ...;
+    Extractor extractor = extractorFactory.getExtractor(mimeType);
+    String content = extractor.getText(in);
+    // content に text.doc 内の文字列だけ入る
+    :</pre>
+</div>
+</div>
+</div>
+
+</div><!-- article -->
+
+</div><!-- contents_center -->
+
+<div id="footer">
+<address>  &copy; Copyright 
+                    <a href="http://www.seasar.org/">The Seasar Foundation</a>.
+            and the others
+    
+              2009,
+        all rights reserved.
+  <a href="http://www.seasar.org">The Seasar Project</a>.
+</address>
+<div class="line"><span class="hide">spacer</span></div>
+</div><!-- footer -->
+
+</div><!-- wrapper -->
+
+</body>
+</html>

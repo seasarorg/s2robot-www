@@ -131,6 +131,10 @@
     <li class="none">
               <a href="url-filter-guide.html">URL フィルタの設定</a>
         </li>
+              
+    <li class="none">
+              <a href="extractor-guide.html">文字列抽出</a>
+        </li>
           </ul>
           <h2>プロジェクト文書</h2>
         <ul>
@@ -177,7 +181,7 @@
 
 <div id="article">
 <div class="section"><h2>バックグラウンドで実行方法</h2>
-<p>S2Robot は、execute() を実行すると標準ではクロールが終わるまで待ち状態になります。 setBackgroun() メソッドにより、execute() メソッドの実行待ちにならないようにできます。</p>
+<p>S2Robot は、execute() を実行すると標準ではクロールが終わるまで待ち状態になります。 setBackground() メソッドにより、execute() メソッドの実行待ちにならないようにできます。</p>
 <div class="section"><h3>設定方法</h3>
 <p>S2Robot#setBackground(true) とすることで、execute() の実行をバックグラウンドにできます。</p>
 <div class="source"><pre>    S2Robot s2Robot = (S2Robot) container.getComponent(S2Robot.class);
@@ -186,9 +190,7 @@
     s2Robot.setBackground(true);
 
     s2Robot.addUrl(url);
-    s2Robot.robotConfig.setMaxAccessCount(maxCount);
-    s2Robot.robotConfig.setNumOfThread(numOfThread);
-    s2Robot.urlFilter.addInclude(url + &quot;.*&quot;);
+    s2Robot.getUrlFilter().addInclude(url + &quot;.*&quot;);
     String sessionId = s2Robot.execute();
     :
     // 何か処理
