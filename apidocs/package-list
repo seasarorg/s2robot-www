@@ -8,6 +8,7 @@ org.seasar.robot.extractor.impl
 org.seasar.robot.filter
 org.seasar.robot.filter.impl
 org.seasar.robot.helper
+org.seasar.robot.helper.impl
 org.seasar.robot.interval
 org.seasar.robot.interval.impl
 org.seasar.robot.processor
