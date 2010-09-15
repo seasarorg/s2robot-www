@@ -106,7 +106,7 @@
         </li>
               
     <li class="none">
-              <a href="s2robot-example.html">S2Robot-example</a>
+              <a href="s2robot-example.html">S2Robot Example</a>
         </li>
           </ul>
           <h2>各種設定</h2>
@@ -190,13 +190,12 @@
     &lt;dependency&gt;
       &lt;groupId&gt;org.seasar.robot&lt;/groupId&gt;
       &lt;artifactId&gt;s2-robot&lt;/artifactId&gt;
-      &lt;version&gt;0.1.0&lt;/version&gt;
+      &lt;version&gt;0.4.2&lt;/version&gt;
     &lt;/dependency&gt;
     :
   &lt;/dependencies&gt;</pre>
 </div>
-<p>Maven 2 以外で利用する場合は、s2-robot および <a href="dependencies.html">依存関係</a>
- を参照して、必要な jar ファイルを追加してください。</p>
+<p>Maven 2 以外で利用する場合は、s2-robot および <a href="dependencies.html">依存関係</a> を参照して、必要な jar ファイルを追加してください。</p>
 <p>あとは、app.dicon などの dicon ファイルで s2robot.dicon を include します。</p>
 <div class="source"><pre>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
 &lt;!DOCTYPE components PUBLIC &quot;-//SEASAR//DTD S2Container 2.4//EN&quot;
@@ -216,16 +215,20 @@
     :
     &lt;dependency&gt;
       &lt;groupId&gt;org.seasar.robot&lt;/groupId&gt;
+      &lt;artifactId&gt;s2-robot-db-h2&lt;/artifactId&gt;
+      &lt;version&gt;0.4.2&lt;/version&gt;
+    &lt;/dependency&gt;
+    &lt;dependency&gt;
+      &lt;groupId&gt;org.seasar.robot&lt;/groupId&gt;
       &lt;artifactId&gt;s2-robot-db&lt;/artifactId&gt;
-      &lt;version&gt;0.1.0&lt;/version&gt;
+      &lt;version&gt;0.4.2&lt;/version&gt;
     &lt;/dependency&gt;
     :
   &lt;/dependencies&gt;</pre>
 </div>
-<p>Maven 2 以外で利用する場合は、s2-robot、s2-robot-db および <a href="dependencies.html">依存関係</a>
- を参照して、必要な jar ファイルを追加してください。</p>
-<p>利用する DB を用意します。デフォルトでは H2Database を利用するので、プロジェクトのトップディレクトリなどにコピーしてください。 最新のデータは<a href="https://www.seasar.org/svn/sandbox/s2robot/trunk/s2robot-db/src/main/db/" class="externalLink">ここ</a>
-から取得できます。</p>
+<p>Maven 2 以外で利用する場合は、s2-robot、s2-robot-db、s2-robot-db-h2 および <a href="dependencies.html">依存関係</a> を参照して、必要な jar ファイルを追加してください。</p>
+<p>利用する DB を用意します。デフォルトでは H2Database を利用するので、プロジェクトのトップディレクトリなどにコピーしてください。 最新のデータは<a class="externalLink" href="https://www.seasar.org/svn/sandbox/s2robot/trunk/s2robot-db/src/test/resources/db/">ここ</a>から取得できます。</p>
+<p>また、H2Dataaseでなく、MySQLを利用する場合は<a class="externalLink" href="https://www.seasar.org/svn/sandbox/s2robot/trunk/s2robot-db-mysql/src/main/config/robot.ddl">DDL</a>を利用してテーブルを作成して、s2-robot-db-h2の代わりにs2-robot-db-mysqlを利用してください。</p>
 <p>次に app.dicon などの dicon ファイルで s2robot_db.dicon を include します。</p>
 <div class="source"><pre>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
 &lt;!DOCTYPE components PUBLIC &quot;-//SEASAR//DTD S2Container 2.4//EN&quot;
@@ -286,7 +289,7 @@
                     <a href="http://www.seasar.org/">The Seasar Foundation</a>.
             and the others
     
-              2009,
+              2009-2010,
         all rights reserved.
   <a href="http://www.seasar.org">The Seasar Project</a>.
 </address>
