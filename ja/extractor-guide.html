@@ -106,7 +106,7 @@
         </li>
               
     <li class="none">
-              <a href="s2robot-example.html">S2Robot-example</a>
+              <a href="s2robot-example.html">S2Robot Example</a>
         </li>
           </ul>
           <h2>各種設定</h2>
@@ -135,35 +135,6 @@
     <li class="none">
               <strong>文字列抽出</strong>
         </li>
-          </ul>
-          <h2>プロジェクト文書</h2>
-        <ul>
-              
-                
-              
-      
-            
-      
-            
-      
-            
-      
-            
-      
-            
-      
-            
-      
-            
-      
-            
-      
-            
-      
-              
-        <li class="collapsed">
-              <a href="project-info.html">プロジェクト情報</a>
-              </li>
           </ul>
                                        <a href="http://maven.apache.org/" title="Built by Maven" id="poweredBy" name="poweredBy">
             <img alt="Built by Maven" src="./images/logos/maven-feather.png" />
@@ -305,6 +276,49 @@
     :</pre>
 </div>
 </div>
+<div class="section"><h3>各種Extractor</h3>
+<p>Extractor を追加する場合は、ExtractorFactory にも追加してください。</p>
+<div class="section"><h4>TextExtractor</h4>
+<p>テキストファイルからテキストを抽出します。</p>
+<div class="source"><pre>&lt;component name=&quot;textExtractor&quot; class=&quot;org.seasar.robot.extractor.impl.TextExtractor&quot;/&gt;</pre>
+</div>
+</div>
+<div class="section"><h4>XmlExtractor</h4>
+<p>XML ファイルからテキストを抽出します。</p>
+<div class="source"><pre>&lt;component name=&quot;xmlExtractor&quot; class=&quot;org.seasar.robot.extractor.impl.XmlExtractor&quot;/&gt;</pre>
+</div>
+</div>
+<div class="section"><h4>HtmlExtractor</h4>
+<p>HTML ファイルからテキストを抽出します。</p>
+<div class="source"><pre>&lt;component name=&quot;htmlExtractor&quot; class=&quot;org.seasar.robot.extractor.impl.HtmlExtractor&quot;/&gt;</pre>
+</div>
+</div>
+<div class="section"><h4>HtmlXpathExtractor</h4>
+<p>HTML ファイルから XPath で指定してテキストを抽出します。</p>
+<div class="source"><pre>&lt;component name=&quot;htmlXpathExtractor&quot; class=&quot;org.seasar.robot.extractor.impl.HtmlXpathExtractor&quot;&gt;
+    &lt;property name=&quot;targetNodePath&quot;&gt;&quot;//HTML/BODY | //@alt | //@title&quot;&lt;/property&gt;
+    &lt;initMethod name=&quot;addFeature&quot;&gt;
+        &lt;arg&gt;&quot;http://xml.org/sax/features/namespaces&quot;&lt;/arg&gt;
+        &lt;arg&gt;&quot;false&quot;&lt;/arg&gt;
+    &lt;/initMethod&gt;
+&lt;/component&gt;</pre>
+</div>
+</div>
+<div class="section"><h4>TikaExtractor</h4>
+<p>Apache Tika を利用して様々なファイルからテキストを抽出します。 ファイルの種類は自動的に判定されます。</p>
+<div class="source"><pre>&lt;component name=&quot;tikaExtractor&quot; class=&quot;org.seasar.robot.extractor.impl.TikaExtractor&quot;/&gt;</pre>
+</div>
+</div>
+<div class="section"><h4>CommandExtractor</h4>
+<p>コマンドライン呼び出しによりテキスト抽出を行う Extractor です。 たとえば、以下のように設定することで pdftotext コマンドを利用してテキスト抽出ができます。</p>
+<div class="source"><pre>&lt;component name=&quot;pdfCmdExtractor&quot; class=&quot;org.seasar.robot.extractor.impl.CommandExtractor&quot;&gt;
+    &lt;property name=&quot;command&quot;&gt;&quot;pdftotext $INPUT_FILE $OUTPUT_FILE&quot;&lt;/property&gt;
+    &lt;property name=&quot;outputEncoding&quot;&gt;&quot;UTF-8&quot;&lt;/property&gt;
+&lt;/component&gt;</pre>
+</div>
+<p>$INPUT_FILE は変換元のファイルパス、$OUTPUT_FILE は変換後のファイルパスです。 これらのファイルは S2Robot により一時的に作成され、テキスト抽出後に削除されます。 outputEncoding は $OUTPUT_FILE のエンコーディングです。 outputEncoding を正しく設定しないと文字化けの原因になります。</p>
+</div>
+</div>
 </div>
 
 </div><!-- article -->
@@ -316,7 +330,7 @@
                     <a href="http://www.seasar.org/">The Seasar Foundation</a>.
             and the others
     
-              2009,
+              2009-2010,
         all rights reserved.
   <a href="http://www.seasar.org">The Seasar Project</a>.
 </address>
