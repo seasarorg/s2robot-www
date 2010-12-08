@@ -2,6 +2,9 @@ org.seasar.robot
 org.seasar.robot.client
 org.seasar.robot.client.fs
 org.seasar.robot.client.http
+org.seasar.robot.client.http.impl
+org.seasar.robot.client.http.ntlm
+org.seasar.robot.client.smb
 org.seasar.robot.entity
 org.seasar.robot.extractor
 org.seasar.robot.extractor.impl
@@ -11,6 +14,7 @@ org.seasar.robot.helper
 org.seasar.robot.helper.impl
 org.seasar.robot.interval
 org.seasar.robot.interval.impl
+org.seasar.robot.log
 org.seasar.robot.processor
 org.seasar.robot.processor.impl
 org.seasar.robot.rule

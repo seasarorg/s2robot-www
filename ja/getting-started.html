@@ -106,7 +106,7 @@
         </li>
               
     <li class="none">
-              <a href="s2robot-example.html">S2Robot-example</a>
+              <a href="s2robot-example.html">S2Robot Example</a>
         </li>
           </ul>
           <h2>各種設定</h2>
@@ -135,35 +135,6 @@
     <li class="none">
               <a href="extractor-guide.html">文字列抽出</a>
         </li>
-          </ul>
-          <h2>プロジェクト文書</h2>
-        <ul>
-              
-                
-              
-      
-            
-      
-            
-      
-            
-      
-            
-      
-            
-      
-            
-      
-            
-      
-            
-      
-            
-      
-              
-        <li class="collapsed">
-              <a href="project-info.html">プロジェクト情報</a>
-              </li>
           </ul>
                                        <a href="http://maven.apache.org/" title="Built by Maven" id="poweredBy" name="poweredBy">
             <img alt="Built by Maven" src="./images/logos/maven-feather.png" />
@@ -233,8 +204,7 @@
 <li>void delete(String sessionId): 指定された sessionId で保存されているクロール結果をすべて削除します。</li>
 <li>void deleteAll(): すべてのクロール結果を削除します。</li>
 <li>AccessResult getAccessResult(String sessionId, String url): 指定された sessionId と url で保存されているクロール結果を返します。</li>
-<li>List<i>AccessResult</i>
- getAccessResultList(String url, boolean hasData): 指定された sessionId で保存されているクロール結果の一覧を返します。hasData を true にすると、Transformer により変換された抽出結果が AccessResult に含まれます。</li>
+<li>List<i>AccessResult</i> getAccessResultList(String url, boolean hasData): 指定された sessionId で保存されているクロール結果の一覧を返します。hasData を true にすると、Transformer により変換された抽出結果が AccessResult に含まれます。</li>
 <li>void iterate(String sessionId, final AccessResultCallback accessResultCallback): 指定された sessionId と accessResultCallback を渡して、そのセッション ID に保存されているクロール結果を順に accessResultCallback に渡して処理します。<p>DataService を利用するには、以下のようにアクションクラスやサービスクラスなどで DI してください。</p>
 <div class="source"><pre>@Resource
 protected DataService dataService;</pre>
@@ -260,7 +230,7 @@ protected DataService dataService;</pre>
                     <a href="http://www.seasar.org/">The Seasar Foundation</a>.
             and the others
     
-              2009,
+              2009-2010,
         all rights reserved.
   <a href="http://www.seasar.org">The Seasar Project</a>.
 </address>
